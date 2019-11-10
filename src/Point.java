@@ -31,6 +31,18 @@ public class Point implements Comparable {
         }
     }
 
+    public boolean isAboveLine(Point p, Point q){
+        double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
+        double intercept = -(slope * p.getX() - y);
+        return (this.y > this.x * slope + intercept);
+    }
+
+    public boolean isBelowLine(Point p, Point q){
+        double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
+        double intercept = -(slope * p.getX() - y);
+        return (this.y < this.x * slope + intercept);
+    }
+
     /**
      * Computes the distance between this and another Point.
      * @param p - Second Point.
