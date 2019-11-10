@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input2.txt";
+        String fileName = "input3.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -31,8 +31,13 @@ public class Main {
         findUpperHull(getMin(points), getMax(points), points);
     }
 
+    /**
+     * Recursively finds and prints the convex upper hull of a set of points.
+     * @param p - First point in the separating line.
+     * @param q - Second point in the separating line.
+     * @param s - Set of points to hull in.
+     */
     private static void findUpperHull(Point p, Point q, ArrayList<Point> s){
-        //check to see if there are any points not along this line, end if there aren't any
         s.remove(p);
         s.remove(q);
         for(int i = 0; i < s.size(); i++){
@@ -69,6 +74,13 @@ public class Main {
         }
     }
 
+    /**
+     * Finds the Point object furthest from the line.
+     * @param p - First Point of the line.
+     * @param q - Second Point of the line.
+     * @param points - An ArrayList of Point objects.
+     * @return - Point furthest from the line.
+     */
     private static Point furthestFromLine(Point p, Point q, ArrayList<Point> points){
         double minDistance = points.get(0).distanceFromLine(p, q);
         Point furthestPoint = points.get(0);
@@ -80,22 +92,41 @@ public class Main {
         return furthestPoint;
     }
 
+    /**
+     * Finds the Point with the smallest X-coordinate value.
+     * @param points - An ArrayList of Point objects.
+     * @return - Point with the smallest X-coordinate value.
+     */
     private static Point getMin(ArrayList<Point> points){
         Collections.sort(points);
         return points.get(0);
     }
 
+    /**
+     * Finds the Point with the largest X-coordinate value.
+     * @param points - An ArrayList of Point objects.
+     * @return - Point with the largest X-coordinate value.
+     */
     private static Point getMax(ArrayList<Point> points){
         Collections.sort(points);
         return points.get(points.size() - 1);
     }
 
+    /**
+     * Prints all the points in the format specified by the assignment instructions.
+     * @param points - An ArrayList of Point objects.
+     */
     private static void printPoints(ArrayList<Point> points){
         for (Point point : points) {
             System.out.println(point.toString());
         }
     }
 
+    /**
+     * Takes a file scanner and turns the file into an ArrayList of Point objects.
+     * @param fileScan - Scanner holding an input file.
+     * @return - ArrayList of Point objects.
+     */
     private static ArrayList<Point> scanInput(Scanner fileScan){
         ArrayList<Point> points = new ArrayList<>();
         int quantity = fileScan.nextInt();

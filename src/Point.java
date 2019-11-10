@@ -2,6 +2,11 @@ public class Point implements Comparable {
     private double x;
     private double y;
 
+    /**
+     * Default constructor for the Point class.
+     * @param x - x-coordinate of the Point.
+     * @param y - y-coordinate of the Point.
+     */
     public Point(double x, double y){
         this.x = x;
         this.y = y;
@@ -31,12 +36,24 @@ public class Point implements Comparable {
         }
     }
 
+    /**
+     * Confirms if this point is above the line.
+     * @param p - First point of the line.
+     * @param q - Second point of the line.
+     * @return - True if the point is above the line.
+     */
     public boolean isAboveLine(Point p, Point q){
         double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
         double intercept = -(slope * p.getX() - y);
         return (this.y > this.x * slope + intercept);
     }
 
+    /**
+     * Confirms if this point is below the line.
+     * @param p - First point of the line.
+     * @param q - Second point of the line.
+     * @return - True if the point is below the line.
+     */
     public boolean isBelowLine(Point p, Point q){
         double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
         double intercept = -(slope * p.getX() - y);
