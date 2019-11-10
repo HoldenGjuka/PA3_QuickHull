@@ -21,7 +21,14 @@ public class Point implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return 0;
+        Point p = (Point) o;
+        if(this.x < p.getX()){
+            return -1;
+        } else if (this.x == p.getX()){
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     /**

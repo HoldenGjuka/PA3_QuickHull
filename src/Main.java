@@ -1,12 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input3.txt";
+        String fileName = "input1.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -15,14 +17,39 @@ public class Main {
             System.out.println("File not found!");
         }
         points = scanInput(fileScan);
-        Point a = new Point(1, 1);
-        Point b = new Point(3, 3);
-        Point c = new Point(10, 0);
-        System.out.println(c.distanceFromLine(a, b));
+        Collections.sort(points);
+        //System.out.println(points.get(1).distanceFromLine(points.get(0), points.get(2)));
+        findUpperHull(getMin(points), getMax(points), points);
     }
 
     public static void findUpperHull(Point p, Point q, ArrayList<Point> s){
-        //complete this
+        //check to see if there are any points not along this line, end if there aren't any
+        s.remove(p);
+        s.remove(q);
+        for(int i = 0; i < s.size(); i++){
+            if(s.get(i).distanceFromLine(p, q) == 0){
+                System.out.println("Along the line: " + s.get(i).toString());
+                s.remove(s.get(i));
+            }
+        }
+        if(s.size() == 0){
+            System.out.println("Recursion ends here!");
+        }
+        else {
+
+
+        }
+
+    }
+
+    private static Point getMin(ArrayList<Point> points){
+        Collections.sort(points);
+        return points.get(0);
+    }
+
+    private static Point getMax(ArrayList<Point> points){
+        Collections.sort(points);
+        return points.get(points.size() - 1);
     }
 
     private static void printPoints(ArrayList<Point> points){
