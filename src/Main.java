@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input3.txt";
+        String fileName = "input1.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -25,8 +25,9 @@ public class Main {
         }
         points = scanInput(fileScan);
         Collections.sort(points);
-        System.out.println("MinPoint: " + getMin(points));
-        System.out.println("MaxPoint: " + getMax(points));
+        Point xMin = getMin(points);
+        Point xMax = getMax(points);
+        points = removePointsBelowLine(xMin, xMax, points);
         findUpperHull(getMin(points), getMax(points), points);
         findUpperHull(getMax(points), getMin(points), points);
     }
@@ -38,17 +39,10 @@ public class Main {
      * @param s - Set of points to hull in.
      */
     private static void findUpperHull(Point p, Point q, ArrayList<Point> s){
-        s.remove(p);
-        s.remove(q);
         for(int i = 0; i < s.size(); i++){
             Point a = s.get(i);
             if(a.distanceFromLine(p, q) == 0){
-                //System.out.println("Along the line: " + a.toString());
-                s.remove(a);
-            }
-            if(s.contains(a) && a.isBelowLine(p, q)){
-                s.remove(a);
-                //System.out.println("Removed an inferior point. Size is: " + s.size());
+                System.out.println(a.toString());
             }
         }
         if(s.size() != 0){
@@ -63,15 +57,22 @@ public class Main {
             }
             ArrayList<Point> s2 = new ArrayList<>();
             for (int i = 0; i < s.size(); i++) {
-                if(s.get(i).isBelowLine(pointMax, q)){
+                if(s.get(i).isAboveLine(pointMax, q)){
                     s2.add(s.get(i));
                 }
             }
-//            System.out.println(s1);
-//            System.out.println(s2);
             findUpperHull(p, pointMax, s1);
             findUpperHull(pointMax, q, s2);
         }
+    }
+
+    private static ArrayList<Point> removePointsBelowLine(Point a, Point b, ArrayList<Point> points){
+        for (Point p : new ArrayList<>(points)) {
+            if (p.isBelowLine(a, b)) {
+                points.remove(p);
+            }
+        }
+        return points;
     }
 
     /**
