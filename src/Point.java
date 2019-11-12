@@ -44,7 +44,7 @@ public class Point implements Comparable {
      */
     public boolean isAboveLine(Point p, Point q){
         double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
-        double intercept = y - slope * p.getX();
+        double intercept = p.getY() - slope * p.getX();
         return (this.y > this.x * slope + intercept);
     }
 
@@ -56,7 +56,7 @@ public class Point implements Comparable {
      */
     public boolean isBelowLine(Point p, Point q){
         double slope = ((q.getY() - p.getY()) / (q.getX() - p.getX()));
-        double intercept = y - slope * p.getX();
+        double intercept = p.getY() - slope * p.getX();
         return (this.y < this.x * slope + intercept);
     }
 

@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input2.txt";
+        String fileName = "input3.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -35,8 +35,8 @@ public class Main {
         ArrayList<Point> upperHullPoints = getPointsAboveLine(xMin, xMax, points);
         System.out.println("Upper hull Points: " + upperHullPoints);
 
-        //findUpperHull(xMin, xMax, upperHullPoints);
-        //findUpperHull(xMax, xMin, lowerHullPoints);
+        findUpperHull(xMin, xMax, upperHullPoints);
+        findUpperHull(xMax, xMin, lowerHullPoints);
     }
 
     /**
