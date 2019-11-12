@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input1.txt";
+        String fileName = "input3.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -27,9 +27,11 @@ public class Main {
         Collections.sort(points);
         Point xMin = getMin(points);
         Point xMax = getMax(points);
+        System.out.println(xMin.toString());
+        System.out.println(xMax.toString());
         points = removePointsBelowLine(xMin, xMax, points);
         findUpperHull(getMin(points), getMax(points), points);
-        findUpperHull(getMax(points), getMin(points), points);
+        //findUpperHull(getMax(points), getMin(points), points);
     }
 
     /**
@@ -39,12 +41,6 @@ public class Main {
      * @param s - Set of points to hull in.
      */
     private static void findUpperHull(Point p, Point q, ArrayList<Point> s){
-        for(int i = 0; i < s.size(); i++){
-            Point a = s.get(i);
-            if(a.distanceFromLine(p, q) == 0){
-                System.out.println(a.toString());
-            }
-        }
         if(s.size() != 0){
             Point pointMax = furthestFromLine(p, q, s);
             System.out.println("New Hull Point: " + pointMax.toString());
@@ -83,11 +79,12 @@ public class Main {
      * @return - Point furthest from the line.
      */
     private static Point furthestFromLine(Point p, Point q, ArrayList<Point> points){
-        double minDistance = points.get(0).distanceFromLine(p, q);
+        double maxDistance = points.get(0).distanceFromLine(p, q);
         Point furthestPoint = points.get(0);
         for(int i = 0; i < points.size(); i++){
-            if(points.get(i).distanceFromLine(p, q) < minDistance) {
+            if(points.get(i).distanceFromLine(p, q) > maxDistance) {
                 furthestPoint = points.get(i);
+                maxDistance = points.get(i).distanceFromLine(p, q);
             }
         }
         return furthestPoint;
