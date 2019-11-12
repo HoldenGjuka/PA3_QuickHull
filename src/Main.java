@@ -25,10 +25,10 @@ public class Main {
         }
         points = scanInput(fileScan);
         Collections.sort(points);
-        //System.out.println(points.get(1).distanceFromLine(points.get(0), points.get(2)));
         System.out.println("MinPoint: " + getMin(points));
         System.out.println("MaxPoint: " + getMax(points));
         findUpperHull(getMin(points), getMax(points), points);
+        findUpperHull(getMax(points), getMin(points), points);
     }
 
     /**
@@ -43,32 +43,32 @@ public class Main {
         for(int i = 0; i < s.size(); i++){
             Point a = s.get(i);
             if(a.distanceFromLine(p, q) == 0){
-                System.out.println("Along the line: " + a.toString());
+                //System.out.println("Along the line: " + a.toString());
                 s.remove(a);
             }
             if(s.contains(a) && a.isBelowLine(p, q)){
                 s.remove(a);
-                System.out.println("Removed an inferior point. Size is: " + s.size());
+                //System.out.println("Removed an inferior point. Size is: " + s.size());
             }
         }
-        if(s.size() == 0){
-            System.out.println("Recursion ends here!");
-        } else {
+        if(s.size() != 0){
             Point pointMax = furthestFromLine(p, q, s);
             System.out.println("New Hull Point: " + pointMax.toString());
             s.remove(pointMax);
             ArrayList<Point> s1 = new ArrayList<>();
-            for(Point i : s){
-                if(!i.isAboveLine(p, pointMax)){
-                    s1.add(i);
+            for (int i = 0; i < s.size(); i++) {
+                if(s.get(i).isAboveLine(p, pointMax)){
+                    s1.add(s.get(i));
                 }
             }
             ArrayList<Point> s2 = new ArrayList<>();
-            for(Point i : s){
-                if(!i.isAboveLine(pointMax, q)){
-                    s2.add(i);
+            for (int i = 0; i < s.size(); i++) {
+                if(s.get(i).isBelowLine(pointMax, q)){
+                    s2.add(s.get(i));
                 }
             }
+//            System.out.println(s1);
+//            System.out.println(s2);
             findUpperHull(p, pointMax, s1);
             findUpperHull(pointMax, q, s2);
         }

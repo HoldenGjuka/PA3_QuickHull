@@ -84,5 +84,4 @@ public class Point implements Comparable {
         double denominator = Math.sqrt(Math.pow(yDif, 2) + Math.pow(xDif, 2));
         return numerator/denominator;
     }
-
 }
