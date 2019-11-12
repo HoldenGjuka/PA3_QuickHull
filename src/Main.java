@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         ArrayList<Point> points = new ArrayList<>();
-        String fileName = "input3.txt";
+        String fileName = "input2.txt";
         File file = new File(fileName);
         Scanner fileScan = null;
         try {
@@ -29,9 +29,14 @@ public class Main {
         Point xMax = getMax(points);
         System.out.println(xMin.toString());
         System.out.println(xMax.toString());
-        points = removePointsBelowLine(xMin, xMax, points);
-        findUpperHull(getMin(points), getMax(points), points);
-        //findUpperHull(getMax(points), getMin(points), points);
+
+        ArrayList<Point> lowerHullPoints = getPointsBelowLine(xMin, xMax, points);
+        System.out.println("Lower Hull Points: " + lowerHullPoints);
+        ArrayList<Point> upperHullPoints = getPointsAboveLine(xMin, xMax, points);
+        System.out.println("Upper hull Points: " + upperHullPoints);
+
+        //findUpperHull(xMin, xMax, upperHullPoints);
+        //findUpperHull(xMax, xMin, lowerHullPoints);
     }
 
     /**
@@ -62,13 +67,24 @@ public class Main {
         }
     }
 
-    private static ArrayList<Point> removePointsBelowLine(Point a, Point b, ArrayList<Point> points){
-        for (Point p : new ArrayList<>(points)) {
-            if (p.isBelowLine(a, b)) {
-                points.remove(p);
+    private static ArrayList<Point> getPointsAboveLine(Point a, Point b, ArrayList<Point> points){
+        ArrayList<Point> aboveLine = new ArrayList<>();
+        for (Point p : points) {
+            if (p.isAboveLine(a, b)) {
+                aboveLine.add(p);
             }
         }
-        return points;
+        return aboveLine;
+    }
+
+    private static ArrayList<Point> getPointsBelowLine(Point a, Point b, ArrayList<Point> points){
+        ArrayList<Point> belowLine = new ArrayList<>();
+        for (Point p : points) {
+            if (p.isBelowLine(a, b)) {
+                belowLine.add(p);
+            }
+        }
+        return belowLine;
     }
 
     /**
