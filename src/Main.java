@@ -29,12 +29,8 @@ public class Main {
         Point xMax = getMax(points);
         System.out.println(xMin.toString());
         System.out.println(xMax.toString());
-
         ArrayList<Point> lowerHullPoints = getPointsBelowLine(xMin, xMax, points);
-        System.out.println("Lower Hull Points: " + lowerHullPoints);
         ArrayList<Point> upperHullPoints = getPointsAboveLine(xMin, xMax, points);
-        System.out.println("Upper hull Points: " + upperHullPoints);
-
         findUpperHull(xMin, xMax, upperHullPoints);
         findUpperHull(xMax, xMin, lowerHullPoints);
     }
@@ -48,7 +44,7 @@ public class Main {
     private static void findUpperHull(Point p, Point q, ArrayList<Point> s){
         if(s.size() != 0){
             Point pointMax = furthestFromLine(p, q, s);
-            System.out.println("New Hull Point: " + pointMax.toString());
+            System.out.println(pointMax.toString());
             s.remove(pointMax);
             ArrayList<Point> s1 = new ArrayList<>();
             for (int i = 0; i < s.size(); i++) {
@@ -67,6 +63,13 @@ public class Main {
         }
     }
 
+    /**
+     * Retrieves all the points above a line.
+     * @param a - First point of the line.
+     * @param b - Second point of the line.
+     * @param points - ArrayList of Point objects.
+     * @return - ArrayList of Point objects above the line.
+     */
     private static ArrayList<Point> getPointsAboveLine(Point a, Point b, ArrayList<Point> points){
         ArrayList<Point> aboveLine = new ArrayList<>();
         for (Point p : points) {
@@ -77,6 +80,13 @@ public class Main {
         return aboveLine;
     }
 
+    /**
+     * Retrieves all the points below a line.
+     * @param a - First point of the line.
+     * @param b - Second point of the line.
+     * @param points - ArrayList of Point objects.
+     * @return - ArrayList of Point objects below the line.
+     */
     private static ArrayList<Point> getPointsBelowLine(Point a, Point b, ArrayList<Point> points){
         ArrayList<Point> belowLine = new ArrayList<>();
         for (Point p : points) {
